@@ -19,16 +19,12 @@ abstract class TasksRecord implements Built<TasksRecord, TasksRecordBuilder> {
   DateTime get deadline;
 
   @nullable
-  String get uid;
-
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(TasksRecordBuilder builder) => builder
     ..title = ''
-    ..description = ''
-    ..uid = '';
+    ..description = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('tasks');
@@ -55,12 +51,10 @@ Map<String, dynamic> createTasksRecordData({
   String title,
   String description,
   DateTime deadline,
-  String uid,
 }) =>
     serializers.toFirestore(
         TasksRecord.serializer,
         TasksRecord((t) => t
           ..title = title
           ..description = description
-          ..deadline = deadline
-          ..uid = uid));
+          ..deadline = deadline));
