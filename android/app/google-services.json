@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "95528948874",
+    "project_id": "todoler-ca12f",
+    "storage_bucket": "todoler-ca12f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95528948874:android:abc142f14780be894b8973",
+        "android_client_info": {
+          "package_name": "com.mycompany.todoler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95528948874-9qhheh865n1q4vpkgfk51otta8a4dkba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.todoler",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "95528948874-6nm9ruj71a72d2jna53k6vlk3i67fspt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgrQrCTGRj0n9TtZ56Z3XpLndsUsiAUzY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95528948874-6nm9ruj71a72d2jna53k6vlk3i67fspt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "95528948874-45c7cqje69sqpdkooksva739p9lraoma.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.todoler"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
