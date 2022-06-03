@@ -1,9 +1,12 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../home_page/home_page_widget.dart';
 import '../new_task/new_task_widget.dart';
-import '../profiles/profiles_widget.dart';
-import '../tasks_view/tasks_view_widget.dart';
+import '../tasks_important/tasks_important_widget.dart';
+import '../tasks_not_so_important/tasks_not_so_important_widget.dart';
+import '../tasks_very_important/tasks_very_important_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,6 +38,51 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 1.01,
                   fit: BoxFit.cover,
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.99, -0.98),
+                child: InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.chevron_left,
+                    color: Color(0x80000000),
+                    size: 44,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.75, -0.96),
+                child: Text(
+                  'Back',
+                  style: TextStyle(
+                    fontFamily: 'Alexandria Script',
+                    color: Color(0x80000000),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0.9, -0.98),
+                child: InkWell(
+                  onTap: () async {
+                    await signOut();
+                    await Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePageWidget(),
+                      ),
+                      (r) => false,
+                    );
+                  },
+                  child: Icon(
+                    Icons.login,
+                    color: Color(0x80000000),
+                    size: 40,
+                  ),
                 ),
               ),
               Align(
@@ -76,20 +124,6 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.77, -0.37),
-                child: Container(
-                  width: 170,
-                  height: 170,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                    'assets/images/mcatd_1.png',
-                  ),
-                ),
-              ),
-              Align(
                 alignment: AlignmentDirectional(0.52, -0.16),
                 child: Text(
                   'important',
@@ -110,9 +144,9 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
                       context,
                       PageTransition(
                         type: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 300),
-                        reverseDuration: Duration(milliseconds: 300),
-                        child: TasksViewWidget(),
+                        duration: Duration(milliseconds: 1000),
+                        reverseDuration: Duration(milliseconds: 1000),
+                        child: TasksVeryImportantWidget(),
                       ),
                     );
                   },
@@ -127,11 +161,25 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
                         width: 3,
                       ),
                     ),
+                    child: Align(
+                      alignment: AlignmentDirectional(-0.77, -0.37),
+                      child: Container(
+                        width: 170,
+                        height: 170,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          'assets/images/mcatd_1.png',
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.21, 0.92),
+                alignment: AlignmentDirectional(0.05, 0.92),
                 child: Text(
                   'Add new tasks',
                   style: FlutterFlowTheme.of(context).title2.override(
@@ -143,61 +191,87 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.74, 0.45),
-                child: Container(
-                  width: 170,
-                  height: 170,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                    'assets/images/albfo_3.png',
-                    fit: BoxFit.none,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0.67, 0.1),
-                child: Container(
-                  width: 170,
-                  height: 170,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                    'assets/images/9hsjc_2.png',
-                    fit: BoxFit.none,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.59, 0.42),
-                child: Container(
-                  width: 110,
-                  height: 110,
-                  decoration: BoxDecoration(
-                    color: Color(0x00EEEEEE),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Color(0xFF00FF3A),
-                      width: 3,
+                alignment: AlignmentDirectional(0.6, 0.1),
+                child: InkWell(
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 1000),
+                        reverseDuration: Duration(milliseconds: 1000),
+                        child: TasksImportantWidget(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 140,
+                    height: 140,
+                    decoration: BoxDecoration(
+                      color: Color(0x00EEEEEE),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Color(0xFFFFFA00),
+                        width: 3,
+                      ),
+                    ),
+                    child: Align(
+                      alignment: AlignmentDirectional(0.67, 0.1),
+                      child: Container(
+                        width: 170,
+                        height: 170,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          'assets/images/9hsjc_2.png',
+                          fit: BoxFit.none,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.6, 0.1),
-                child: Container(
-                  width: 140,
-                  height: 140,
-                  decoration: BoxDecoration(
-                    color: Color(0x00EEEEEE),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Color(0xFFFFFA00),
-                      width: 3,
+                alignment: AlignmentDirectional(-0.59, 0.42),
+                child: InkWell(
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 1000),
+                        reverseDuration: Duration(milliseconds: 1000),
+                        child: TasksNotSoImportantWidget(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 110,
+                    height: 110,
+                    decoration: BoxDecoration(
+                      color: Color(0x00EEEEEE),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Color(0xFF00FF3A),
+                        width: 3,
+                      ),
+                    ),
+                    child: Align(
+                      alignment: AlignmentDirectional(-0.74, 0.45),
+                      child: Container(
+                        width: 170,
+                        height: 170,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          'assets/images/albfo_3.png',
+                          fit: BoxFit.none,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -225,40 +299,6 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
                       ),
                     );
                   },
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.99, -0.98),
-                child: InkWell(
-                  onTap: () async {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.chevron_left,
-                    color: Color(0x80000000),
-                    size: 44,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0.96, -0.98),
-                child: InkWell(
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 100),
-                        reverseDuration: Duration(milliseconds: 100),
-                        child: ProfilesWidget(),
-                      ),
-                    );
-                  },
-                  child: Icon(
-                    Icons.close,
-                    color: Color(0x80000000),
-                    size: 44,
-                  ),
                 ),
               ),
             ],

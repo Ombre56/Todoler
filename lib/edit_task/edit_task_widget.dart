@@ -213,6 +213,31 @@ class _EditTaskWidgetState extends State<EditTaskWidget>
                 height: MediaQuery.of(context).size.height * 1,
                 fit: BoxFit.cover,
               ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
+                child: InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.chevron_left,
+                    color: Color(0x80000000),
+                    size: 44,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.75, -0.96),
+                child: Text(
+                  'Back',
+                  style: TextStyle(
+                    fontFamily: 'Alexandria Script',
+                    color: Color(0x80000000),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
               Align(
                 alignment: AlignmentDirectional(0, -0.84),
                 child: Text(
@@ -499,19 +524,6 @@ class _EditTaskWidgetState extends State<EditTaskWidget>
                         fontSize: 40,
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
-                child: InkWell(
-                  onTap: () async {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.chevron_left,
-                    color: Color(0x80000000),
-                    size: 44,
                   ),
                 ),
               ),
