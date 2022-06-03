@@ -1,8 +1,9 @@
-import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../creating_profile/creating_profile_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../task_category/task_category_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -50,8 +51,8 @@ class _ProfilesWidgetState extends State<ProfilesWidget> {
               ),
               Align(
                 alignment: AlignmentDirectional(0, -0.35),
-                child: FutureBuilder<List<UsersRecord>>(
-                  future: queryUsersRecordOnce(
+                child: StreamBuilder<List<UsersRecord>>(
+                  stream: queryUsersRecord(
                     limit: 3,
                   ),
                   builder: (context, snapshot) {
@@ -68,10 +69,8 @@ class _ProfilesWidgetState extends State<ProfilesWidget> {
                         ),
                       );
                     }
-                    List<UsersRecord> profilesListUsersRecordList = snapshot
-                        .data
-                        .where((u) => u.uid != currentUserUid)
-                        .toList();
+                    List<UsersRecord> profilesListUsersRecordList =
+                        snapshot.data;
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children:
@@ -142,13 +141,28 @@ class _ProfilesWidgetState extends State<ProfilesWidget> {
                                   ),
                                   child: Align(
                                     alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      profilesListUsersRecord.displayName,
-                                      style: TextStyle(
-                                        fontFamily: 'Alexandria Script',
-                                        color: Color(0xFF353535),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 25,
+                                    child: InkWell(
+                                      onTap: () async {
+                                        await Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            reverseDuration:
+                                                Duration(milliseconds: 300),
+                                            child: TaskCategoryWidget(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        profilesListUsersRecord.displayName,
+                                        style: TextStyle(
+                                          fontFamily: 'Alexandria Script',
+                                          color: Color(0xFF353535),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 25,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -186,6 +200,45 @@ class _ProfilesWidgetState extends State<ProfilesWidget> {
                       color: FlutterFlowTheme.of(context).primaryBtnText,
                       fontWeight: FontWeight.w500,
                       fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0, 0.36),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(30, 0, 30, 0),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Color(0x80EEEEEE),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Align(
+                      alignment: AlignmentDirectional(0, 0),
+                      child: InkWell(
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 300),
+                              reverseDuration: Duration(milliseconds: 300),
+                              child: CreatingProfileWidget(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          '+',
+                          style: TextStyle(
+                            fontFamily: 'Alexandria Script',
+                            color: FlutterFlowTheme.of(context).primaryBtnText,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 40,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),

@@ -3,6 +3,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../new_task/new_task_widget.dart';
 import '../profiles/profiles_widget.dart';
+import '../tasks_view/tasks_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -103,15 +104,28 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
               ),
               Align(
                 alignment: AlignmentDirectional(-0.74, -0.37),
-                child: Container(
-                  width: 160,
-                  height: 160,
-                  decoration: BoxDecoration(
-                    color: Color(0x00EEEEEE),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Color(0xFFFF0000),
-                      width: 3,
+                child: InkWell(
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 300),
+                        reverseDuration: Duration(milliseconds: 300),
+                        child: TasksViewWidget(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 160,
+                    height: 160,
+                    decoration: BoxDecoration(
+                      color: Color(0x00EEEEEE),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Color(0xFFFF0000),
+                        width: 3,
+                      ),
                     ),
                   ),
                 ),

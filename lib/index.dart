@@ -1,6 +1,6 @@
 // Export pages
-export 'profiles/profiles_widget.dart' show ProfilesWidget;
 export 'home_page/home_page_widget.dart' show HomePageWidget;
+export 'profiles/profiles_widget.dart' show ProfilesWidget;
 export 'creating_profile/creating_profile_widget.dart'
     show CreatingProfileWidget;
 export 'new_task/new_task_widget.dart' show NewTaskWidget;
