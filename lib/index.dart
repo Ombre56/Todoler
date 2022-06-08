@@ -12,4 +12,3 @@ export 'tasks_not_so_important/tasks_not_so_important_widget.dart'
     show TasksNotSoImportantWidget;
 export 'task_view/task_view_widget.dart' show TaskViewWidget;
 export 'new_task/new_task_widget.dart' show NewTaskWidget;
-export 'edit_task/edit_task_widget.dart' show EditTaskWidget;

@@ -27,7 +27,11 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
   TextEditingController emailTextController1;
   TextEditingController passwordTextController1;
   bool passwordVisibility1;
+  final formKey1 = GlobalKey<FormState>();
+  final formKey2 = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final formKey4 = GlobalKey<FormState>();
+  final formKey3 = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -304,75 +308,9 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5, 0, 0, 0),
-                                      child: Text(
-                                        'Displayname',
-                                        style: TextStyle(
-                                          fontFamily: 'Alexandria Script',
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 25,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 330,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: Color(0x48FAF6F6),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: TextFormField(
-                                        controller: textController1,
-                                        onChanged: (_) => EasyDebounce.debounce(
-                                          'textController1',
-                                          Duration(milliseconds: 2000),
-                                          () => setState(() {}),
-                                        ),
-                                        autofocus: true,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          hintText: 'Enter your nickname',
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              topLeft: Radius.circular(4.0),
-                                              topRight: Radius.circular(4.0),
-                                            ),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              topLeft: Radius.circular(4.0),
-                                              topRight: Radius.circular(4.0),
-                                            ),
-                                          ),
-                                          filled: true,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1,
-                                        keyboardType: TextInputType.name,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 10, 0, 0),
+                                Form(
+                                  key: formKey2,
+                                  autovalidateMode: AutovalidateMode.disabled,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -382,7 +320,7 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             5, 0, 0, 0),
                                         child: Text(
-                                          'Email',
+                                          'Displayname',
                                           style: TextStyle(
                                             fontFamily: 'Alexandria Script',
                                             color: Colors.black,
@@ -400,17 +338,24 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                                               BorderRadius.circular(5),
                                         ),
                                         child: TextFormField(
-                                          controller: emailTextController2,
+                                          controller: textController1,
                                           onChanged: (_) =>
                                               EasyDebounce.debounce(
-                                            'emailTextController2',
+                                            'textController1',
                                             Duration(milliseconds: 2000),
                                             () => setState(() {}),
                                           ),
+                                          onFieldSubmitted: (_) async {
+                                            if (formKey2.currentState == null ||
+                                                !formKey2.currentState
+                                                    .validate()) {
+                                              return;
+                                            }
+                                          },
                                           autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            hintText: 'Enter your email',
+                                            hintText: 'Enter your nickname',
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
@@ -437,188 +382,374 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                                           ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
-                                          keyboardType:
-                                              TextInputType.emailAddress,
+                                          keyboardType: TextInputType.name,
+                                          validator: (val) {
+                                            if (val == null || val.isEmpty) {
+                                              return 'Field is required';
+                                            }
+                                            if (val.length < 1) {
+                                              return 'The minimum number of characters is : 1';
+                                            }
+                                            if (val.length > 10) {
+                                              return 'The maximum number of characters is : 10';
+                                            }
+                                            if (!RegExp(
+                                                    kTextValidatorUsernameRegex)
+                                                .hasMatch(val)) {
+                                              return 'You have entered invalid text';
+                                            }
+                                            return null;
+                                          },
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 20, 0, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            5, 0, 0, 0),
-                                        child: Text(
-                                          'Password',
-                                          style: TextStyle(
-                                            fontFamily: 'Alexandria Script',
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 25,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 330,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: Color(0x48FAF6F6),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: TextFormField(
-                                          controller: passwordTextController2,
-                                          onChanged: (_) =>
-                                              EasyDebounce.debounce(
-                                            'passwordTextController2',
-                                            Duration(milliseconds: 2000),
-                                            () => setState(() {}),
-                                          ),
-                                          autofocus: true,
-                                          obscureText: !passwordVisibility2,
-                                          decoration: InputDecoration(
-                                            hintText: 'Enter your password',
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            filled: true,
-                                            suffixIcon: InkWell(
-                                              onTap: () => setState(
-                                                () => passwordVisibility2 =
-                                                    !passwordVisibility2,
-                                              ),
-                                              focusNode: FocusNode(
-                                                  skipTraversal: true),
-                                              child: Icon(
-                                                passwordVisibility2
-                                                    ? Icons.visibility_outlined
-                                                    : Icons
-                                                        .visibility_off_outlined,
-                                                color: Color(0xFF757575),
-                                                size: 22,
-                                              ),
+                                Form(
+                                  key: formKey1,
+                                  autovalidateMode: AutovalidateMode.disabled,
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 10, 0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 0, 0),
+                                          child: Text(
+                                            'Email',
+                                            style: TextStyle(
+                                              fontFamily: 'Alexandria Script',
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 25,
                                             ),
                                           ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
                                         ),
-                                      ),
-                                    ],
+                                        Container(
+                                          width: 330,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            color: Color(0x48FAF6F6),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: TextFormField(
+                                            controller: emailTextController2,
+                                            onChanged: (_) =>
+                                                EasyDebounce.debounce(
+                                              'emailTextController2',
+                                              Duration(milliseconds: 2000),
+                                              () => setState(() {}),
+                                            ),
+                                            onFieldSubmitted: (_) async {
+                                              if (formKey1.currentState ==
+                                                      null ||
+                                                  !formKey1.currentState
+                                                      .validate()) {
+                                                return;
+                                              }
+                                            },
+                                            autofocus: true,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              hintText: 'Enter your email',
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(4.0),
+                                                  topRight:
+                                                      Radius.circular(4.0),
+                                                ),
+                                              ),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(4.0),
+                                                  topRight:
+                                                      Radius.circular(4.0),
+                                                ),
+                                              ),
+                                              filled: true,
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            validator: (val) {
+                                              if (val == null || val.isEmpty) {
+                                                return 'Field is required';
+                                              }
+                                              if (val.length < 1) {
+                                                return 'The minimum number of characters is : 1';
+                                              }
+                                              if (val.length > 20) {
+                                                return 'The maximum number of characters is : 20';
+                                              }
+                                              if (!RegExp(
+                                                      kTextValidatorEmailRegex)
+                                                  .hasMatch(val)) {
+                                                return 'An invalid email was entered';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 20, 0, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            5, 0, 0, 0),
-                                        child: Text(
-                                          'Confirm Password',
-                                          style: TextStyle(
-                                            fontFamily: 'Alexandria Script',
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 25,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 330,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: Color(0x48FAF6F6),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: TextFormField(
-                                          controller:
-                                              confirmPasswordTextController0,
-                                          onChanged: (_) =>
-                                              EasyDebounce.debounce(
-                                            'confirmPasswordTextController0',
-                                            Duration(milliseconds: 2000),
-                                            () => setState(() {}),
-                                          ),
-                                          autofocus: true,
-                                          obscureText: !passwordVisibility3,
-                                          decoration: InputDecoration(
-                                            hintText: 'Enter your password',
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            filled: true,
-                                            suffixIcon: InkWell(
-                                              onTap: () => setState(
-                                                () => passwordVisibility3 =
-                                                    !passwordVisibility3,
-                                              ),
-                                              focusNode: FocusNode(
-                                                  skipTraversal: true),
-                                              child: Icon(
-                                                passwordVisibility3
-                                                    ? Icons.visibility_outlined
-                                                    : Icons
-                                                        .visibility_off_outlined,
-                                                color: Color(0xFF757575),
-                                                size: 22,
-                                              ),
+                                Form(
+                                  key: formKey4,
+                                  autovalidateMode: AutovalidateMode.disabled,
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 20, 0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 0, 0),
+                                          child: Text(
+                                            'Password',
+                                            style: TextStyle(
+                                              fontFamily: 'Alexandria Script',
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 25,
                                             ),
                                           ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
                                         ),
-                                      ),
-                                    ],
+                                        Container(
+                                          width: 330,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            color: Color(0x48FAF6F6),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: TextFormField(
+                                            controller: passwordTextController2,
+                                            onChanged: (_) =>
+                                                EasyDebounce.debounce(
+                                              'passwordTextController2',
+                                              Duration(milliseconds: 2000),
+                                              () => setState(() {}),
+                                            ),
+                                            onFieldSubmitted: (_) async {
+                                              if (formKey4.currentState ==
+                                                      null ||
+                                                  !formKey4.currentState
+                                                      .validate()) {
+                                                return;
+                                              }
+                                            },
+                                            autofocus: true,
+                                            obscureText: !passwordVisibility2,
+                                            decoration: InputDecoration(
+                                              hintText: 'Enter your password',
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(4.0),
+                                                  topRight:
+                                                      Radius.circular(4.0),
+                                                ),
+                                              ),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(4.0),
+                                                  topRight:
+                                                      Radius.circular(4.0),
+                                                ),
+                                              ),
+                                              filled: true,
+                                              suffixIcon: InkWell(
+                                                onTap: () => setState(
+                                                  () => passwordVisibility2 =
+                                                      !passwordVisibility2,
+                                                ),
+                                                focusNode: FocusNode(
+                                                    skipTraversal: true),
+                                                child: Icon(
+                                                  passwordVisibility2
+                                                      ? Icons
+                                                          .visibility_outlined
+                                                      : Icons
+                                                          .visibility_off_outlined,
+                                                  color: Color(0xFF757575),
+                                                  size: 22,
+                                                ),
+                                              ),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                            validator: (val) {
+                                              if (val == null || val.isEmpty) {
+                                                return 'Field is required';
+                                              }
+                                              if (val.length < 1) {
+                                                return 'The minimum number of characters is : 1';
+                                              }
+                                              if (val.length > 20) {
+                                                return 'The maximum number of characters is : 20';
+                                              }
+
+                                              return null;
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Form(
+                                  key: formKey3,
+                                  autovalidateMode: AutovalidateMode.disabled,
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 20, 0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 0, 0),
+                                          child: Text(
+                                            'Confirm Password',
+                                            style: TextStyle(
+                                              fontFamily: 'Alexandria Script',
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 25,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 330,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            color: Color(0x48FAF6F6),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: TextFormField(
+                                            controller:
+                                                confirmPasswordTextController0,
+                                            onChanged: (_) =>
+                                                EasyDebounce.debounce(
+                                              'confirmPasswordTextController0',
+                                              Duration(milliseconds: 2000),
+                                              () => setState(() {}),
+                                            ),
+                                            onFieldSubmitted: (_) async {
+                                              if (formKey3.currentState ==
+                                                      null ||
+                                                  !formKey3.currentState
+                                                      .validate()) {
+                                                return;
+                                              }
+                                            },
+                                            autofocus: true,
+                                            obscureText: !passwordVisibility3,
+                                            decoration: InputDecoration(
+                                              hintText: 'Enter your password',
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(4.0),
+                                                  topRight:
+                                                      Radius.circular(4.0),
+                                                ),
+                                              ),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(4.0),
+                                                  topRight:
+                                                      Radius.circular(4.0),
+                                                ),
+                                              ),
+                                              filled: true,
+                                              suffixIcon: InkWell(
+                                                onTap: () => setState(
+                                                  () => passwordVisibility3 =
+                                                      !passwordVisibility3,
+                                                ),
+                                                focusNode: FocusNode(
+                                                    skipTraversal: true),
+                                                child: Icon(
+                                                  passwordVisibility3
+                                                      ? Icons
+                                                          .visibility_outlined
+                                                      : Icons
+                                                          .visibility_off_outlined,
+                                                  color: Color(0xFF757575),
+                                                  size: 22,
+                                                ),
+                                              ),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                            validator: (val) {
+                                              if (val == null || val.isEmpty) {
+                                                return 'Field is required';
+                                              }
+                                              if (val.length < 1) {
+                                                return 'The minimum number of characters is: 1';
+                                              }
+                                              if (val.length > 20) {
+                                                return 'The maximum number of characters is: 20';
+                                              }
+
+                                              return null;
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Padding(

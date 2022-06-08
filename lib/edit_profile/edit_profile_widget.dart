@@ -283,7 +283,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     child: FFButtonWidget(
                       onPressed: () async {
                         await deleteUser(context);
-                        await editProfileUsersRecord.reference.delete();
+                        await currentUserReference.delete();
                         await Navigator.push(
                           context,
                           PageTransition(
