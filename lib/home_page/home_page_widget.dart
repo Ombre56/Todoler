@@ -1,7 +1,7 @@
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../profiles/profiles_widget.dart';
+import '../login_register/login_register_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,9 +31,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 100),
-                  reverseDuration: Duration(milliseconds: 100),
-                  child: ProfilesWidget(),
+                  duration: Duration(milliseconds: 600),
+                  reverseDuration: Duration(milliseconds: 600),
+                  child: LoginRegisterWidget(),
                 ),
               );
               await Navigator.push(

@@ -16,18 +16,38 @@ abstract class TasksRecord implements Built<TasksRecord, TasksRecordBuilder> {
   String get description;
 
   @nullable
-  DateTime get deadline;
+  DateTime get date;
+
+  @nullable
+  @BuiltValueField(wireName: 'photo_url')
+  String get photoUrl;
+
+  @nullable
+  String get validity;
+
+  @nullable
+  @BuiltValueField(wireName: 'created_by')
+  DocumentReference get createdBy;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
+  DocumentReference get parentReference => reference.parent.parent;
+
   static void _initializeBuilder(TasksRecordBuilder builder) => builder
     ..title = ''
-    ..description = '';
+    ..description = ''
+    ..photoUrl = ''
+    ..validity = '';
 
-  static CollectionReference get collection =>
-      FirebaseFirestore.instance.collection('tasks');
+  static Query<Map<String, dynamic>> collection([DocumentReference parent]) =>
+      parent != null
+          ? parent.collection('tasks')
+          : FirebaseFirestore.instance.collectionGroup('tasks');
+
+  static DocumentReference createDoc(DocumentReference parent) =>
+      parent.collection('tasks').doc();
 
   static Stream<TasksRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
@@ -50,11 +70,17 @@ abstract class TasksRecord implements Built<TasksRecord, TasksRecordBuilder> {
 Map<String, dynamic> createTasksRecordData({
   String title,
   String description,
-  DateTime deadline,
+  DateTime date,
+  String photoUrl,
+  String validity,
+  DocumentReference createdBy,
 }) =>
     serializers.toFirestore(
         TasksRecord.serializer,
         TasksRecord((t) => t
           ..title = title
           ..description = description
-          ..deadline = deadline));
+          ..date = date
+          ..photoUrl = photoUrl
+          ..validity = validity
+          ..createdBy = createdBy));

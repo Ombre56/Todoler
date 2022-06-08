@@ -18,7 +18,11 @@ class FFAppState {
 
   SharedPreferences prefs;
 
-  bool profilePrivate = false;
+  String veryImportant = 'Very Important Tasks';
+
+  String important = 'Important Tasks';
+
+  String notSoImportnat = 'Not So Important Tasks';
 }
 
 LatLng _latLngFromString(String val) {

@@ -1,7 +1,8 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../home_page/home_page_widget.dart';
 import '../new_task/new_task_widget.dart';
-import '../profiles/profiles_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -68,8 +69,8 @@ class _NoTasksWidgetState extends State<NoTasksWidget> {
                       context,
                       PageTransition(
                         type: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 100),
-                        reverseDuration: Duration(milliseconds: 100),
+                        duration: Duration(milliseconds: 600),
+                        reverseDuration: Duration(milliseconds: 600),
                         child: NewTaskWidget(),
                       ),
                     );
@@ -89,9 +90,9 @@ class _NoTasksWidgetState extends State<NoTasksWidget> {
                           await Navigator.push(
                             context,
                             PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              duration: Duration(milliseconds: 300),
-                              reverseDuration: Duration(milliseconds: 300),
+                              type: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 600),
+                              reverseDuration: Duration(milliseconds: 600),
                               child: NewTaskWidget(),
                             ),
                           );
@@ -112,23 +113,22 @@ class _NoTasksWidgetState extends State<NoTasksWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.96, -0.98),
+                alignment: AlignmentDirectional(0.9, -0.98),
                 child: InkWell(
                   onTap: () async {
-                    await Navigator.push(
+                    await signOut();
+                    await Navigator.pushAndRemoveUntil(
                       context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 100),
-                        reverseDuration: Duration(milliseconds: 100),
-                        child: ProfilesWidget(),
+                      MaterialPageRoute(
+                        builder: (context) => HomePageWidget(),
                       ),
+                      (r) => false,
                     );
                   },
                   child: Icon(
-                    Icons.clear,
+                    Icons.login,
                     color: Color(0x81000000),
-                    size: 44,
+                    size: 40,
                   ),
                 ),
               ),
