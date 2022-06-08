@@ -16,10 +16,18 @@ abstract class TasksRecord implements Built<TasksRecord, TasksRecordBuilder> {
   String get description;
 
   @nullable
-  DateTime get deadline;
+  DateTime get date;
+
+  @nullable
+  @BuiltValueField(wireName: 'photo_url')
+  String get photoUrl;
 
   @nullable
   String get validity;
+
+  @nullable
+  @BuiltValueField(wireName: 'created_by')
+  DocumentReference get createdBy;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -30,6 +38,7 @@ abstract class TasksRecord implements Built<TasksRecord, TasksRecordBuilder> {
   static void _initializeBuilder(TasksRecordBuilder builder) => builder
     ..title = ''
     ..description = ''
+    ..photoUrl = ''
     ..validity = '';
 
   static Query<Map<String, dynamic>> collection([DocumentReference parent]) =>
@@ -61,13 +70,17 @@ abstract class TasksRecord implements Built<TasksRecord, TasksRecordBuilder> {
 Map<String, dynamic> createTasksRecordData({
   String title,
   String description,
-  DateTime deadline,
+  DateTime date,
+  String photoUrl,
   String validity,
+  DocumentReference createdBy,
 }) =>
     serializers.toFirestore(
         TasksRecord.serializer,
         TasksRecord((t) => t
           ..title = title
           ..description = description
-          ..deadline = deadline
-          ..validity = validity));
+          ..date = date
+          ..photoUrl = photoUrl
+          ..validity = validity
+          ..createdBy = createdBy));

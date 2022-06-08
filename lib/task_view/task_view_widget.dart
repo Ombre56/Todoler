@@ -1,3 +1,5 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -43,28 +45,93 @@ class _TaskViewWidgetState extends State<TaskViewWidget> {
                   ),
                 ),
               ),
-              Align(
-                alignment: AlignmentDirectional(-0.11, -0.87),
-                child: Text(
-                  '',
-                  style: TextStyle(
-                    fontFamily: 'Alexandria Script',
-                    color: FlutterFlowTheme.of(context).primaryBtnText,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 50,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
+                child: StreamBuilder<List<TasksRecord>>(
+                  stream: queryTasksRecord(
+                    parent: currentUserReference,
+                    singleRecord: true,
                   ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.75, -0.96),
-                child: Text(
-                  'Back',
-                  style: TextStyle(
-                    fontFamily: 'Alexandria Script',
-                    color: Color(0x80000000),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                  ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: SpinKitFoldingCube(
+                            color: Color(0xFF1800FF),
+                            size: 50,
+                          ),
+                        ),
+                      );
+                    }
+                    List<TasksRecord> listViewTasksRecordList = snapshot.data;
+                    // Return an empty Container when the document does not exist.
+                    if (snapshot.data.isEmpty) {
+                      return Container();
+                    }
+                    final listViewTasksRecord =
+                        listViewTasksRecordList.isNotEmpty
+                            ? listViewTasksRecordList.first
+                            : null;
+                    return ListView(
+                      padding: EdgeInsets.zero,
+                      scrollDirection: Axis.vertical,
+                      children: [
+                        if ((listViewTasksRecord.title) ==
+                            (listViewTasksRecord.title))
+                          Align(
+                            alignment: AlignmentDirectional(0, 0),
+                            child: Text(
+                              listViewTasksRecord.title,
+                              style: TextStyle(
+                                fontFamily: 'Alexandria Script',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 50,
+                              ),
+                            ),
+                          ),
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            child: Text(
+                              listViewTasksRecord.description,
+                              style: TextStyle(
+                                fontFamily: 'Alexandria Script',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            child: Text(
+                              dateTimeFormat(
+                                  'MMMMEEEEd', listViewTasksRecord.date),
+                              style: TextStyle(
+                                fontFamily: 'Alexandria Script',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],

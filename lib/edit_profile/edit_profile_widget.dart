@@ -77,21 +77,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(-0.75, -0.96),
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                        fontFamily: 'Alexandria Script',
-                        color: Color(0x80000000),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  Align(
                     alignment: AlignmentDirectional(0, -0.85),
                     child: Text(
-                      'Change your name',
+                      'Edit your name',
                       style: TextStyle(
                         fontFamily: 'Alexandria Script',
                         color: Colors.white,
@@ -103,7 +91,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   Align(
                     alignment: AlignmentDirectional(0, -0.4),
                     child: Text(
-                      'Change your profile',
+                      'Edit your profile',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Alexandria Script',
                             color: Colors.white,
@@ -271,7 +259,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           ),
                         );
                       },
-                      text: 'Change',
+                      text: 'Edit',
                       options: FFButtonOptions(
                         width: 280,
                         height: 60,

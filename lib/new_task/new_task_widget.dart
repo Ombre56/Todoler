@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
+import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -22,9 +23,9 @@ class NewTaskWidget extends StatefulWidget {
 class _NewTaskWidgetState extends State<NewTaskWidget>
     with TickerProviderStateMixin {
   DateTime datePicked;
-  TextEditingController textController3;
   TextEditingController taskDescriptionController;
   TextEditingController taskNameController;
+  String choiceChipsValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'textOnPageLoadAnimation1': AnimationInfo(
@@ -133,51 +134,6 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
         opacity: 1,
       ),
     ),
-    'containerOnPageLoadAnimation4': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 400,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'containerOnPageLoadAnimation5': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 400,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'containerOnPageLoadAnimation6': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 400,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
   };
 
   @override
@@ -191,8 +147,6 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
 
     taskDescriptionController = TextEditingController();
     taskNameController = TextEditingController();
-    textController3 =
-        TextEditingController(text: dateTimeFormat('d/M/y', datePicked));
   }
 
   @override
@@ -221,18 +175,6 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
                     Icons.chevron_left,
                     color: Color(0x80000000),
                     size: 44,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.75, -0.96),
-                child: Text(
-                  'Back',
-                  style: TextStyle(
-                    fontFamily: 'Alexandria Script',
-                    color: Color(0x80000000),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
                   ),
                 ),
               ),
@@ -327,7 +269,7 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
                         alignment: AlignmentDirectional(-0.48, -0.1),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.8,
-                          height: 150,
+                          height: 120,
                           decoration: BoxDecoration(
                             color: Color(0x48FAF6F6),
                             borderRadius: BorderRadius.circular(5),
@@ -363,202 +305,154 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0, 0.25),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-0.83, 0.21),
-                        child: Text(
-                          'Deadline',
-                          style: TextStyle(
-                            fontFamily: 'Alexandria Script',
-                            color: FlutterFlowTheme.of(context).primaryBtnText,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 30,
-                          ),
-                        ).animated([animationsMap['textOnPageLoadAnimation3']]),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Align(
-                              alignment: AlignmentDirectional(-0.82, 0.33),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.35,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x48FAF6F6),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: TextFormField(
-                                  controller: textController3,
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    'textController3',
-                                    Duration(milliseconds: 2000),
-                                    () => setState(() {}),
-                                  ),
-                                  autofocus: true,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelStyle: TextStyle(
-                                      fontFamily: 'Alexandria Script',
-                                      color: Color(0x80000000),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 20,
-                                    ),
-                                    hintText: 'Date',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Alexandria Script',
-                                      color: Color(0x80000000),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 20,
-                                    ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    filled: true,
-                                  ),
+                alignment: AlignmentDirectional(0, 0.15),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(-0.83, 0.21),
+                      child: Text(
+                        'Deadline',
+                        style: TextStyle(
+                          fontFamily: 'Alexandria Script',
+                          color: FlutterFlowTheme.of(context).primaryBtnText,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 30,
+                        ),
+                      ).animated([animationsMap['textOnPageLoadAnimation3']]),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Align(
+                            alignment: AlignmentDirectional(-0.82, 0.33),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Color(0x48FAF6F6),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Align(
+                                alignment: AlignmentDirectional(0, 0),
+                                child: Text(
+                                  dateTimeFormat('d/M/y', datePicked),
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: 'Alexandria Script',
-                                    color: Color(0x80000000),
+                                    color: Colors.black,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 20,
                                   ),
-                                ),
-                              ).animated([
-                                animationsMap['containerOnPageLoadAnimation3']
-                              ]),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await DatePicker.showDatePicker(
-                                    context,
-                                    showTitleActions: true,
-                                    onConfirm: (date) {
-                                      setState(() => datePicked = date);
-                                    },
-                                    currentTime: getCurrentTimestamp,
-                                    minTime: getCurrentTimestamp,
-                                  );
-                                },
-                                text: 'Click',
-                                options: FFButtonOptions(
-                                  width: 70,
-                                  height: 40,
-                                  color: Color(0xFFEF7547),
-                                  textStyle: TextStyle(
-                                    fontFamily: 'Alexandria Script',
-                                    color: Color(0x80000000),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: 12,
                                 ),
                               ),
+                            ).animated([
+                              animationsMap['containerOnPageLoadAnimation3']
+                            ]),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                await DatePicker.showDatePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  onConfirm: (date) {
+                                    setState(() => datePicked = date);
+                                  },
+                                  currentTime: getCurrentTimestamp,
+                                  minTime: getCurrentTimestamp,
+                                );
+                              },
+                              text: 'Click',
+                              options: FFButtonOptions(
+                                width: 70,
+                                height: 40,
+                                color: Color(0xFFEF7547),
+                                textStyle: TextStyle(
+                                  fontFamily: 'Alexandria Script',
+                                  color: Color(0x80000000),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                ),
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: 12,
+                              ),
                             ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.65, 0.49),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'How important is it?',
+                        style: TextStyle(
+                          fontFamily: 'Alexandria Script',
+                          color: FlutterFlowTheme.of(context).primaryBtnText,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 30,
+                        ),
+                      ).animated([animationsMap['textOnPageLoadAnimation4']]),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                        child: FlutterFlowChoiceChips(
+                          initiallySelected: choiceChipsValue != null
+                              ? [choiceChipsValue]
+                              : ['very Important'],
+                          options: [
+                            ChipData('very Important', Icons.train_outlined),
+                            ChipData('important', Icons.accessible),
+                            ChipData('not So Important', Icons.account_box)
                           ],
+                          onChanged: (val) =>
+                              setState(() => choiceChipsValue = val.first),
+                          selectedChipStyle: ChipStyle(
+                            backgroundColor: Color(0xFFEF7547),
+                            textStyle:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                    ),
+                            iconColor: Colors.white,
+                            iconSize: 18,
+                            elevation: 4,
+                          ),
+                          unselectedChipStyle: ChipStyle(
+                            backgroundColor: Colors.white,
+                            textStyle:
+                                FlutterFlowTheme.of(context).bodyText2.override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xFF323B45),
+                                    ),
+                            iconColor: Color(0xFF323B45),
+                            iconSize: 18,
+                            elevation: 4,
+                          ),
+                          chipSpacing: 20,
+                          multiselect: false,
+                          initialized: choiceChipsValue != null,
+                          alignment: WrapAlignment.start,
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.73, 0.47),
-                child: Text(
-                  'How important is it?',
-                  style: TextStyle(
-                    fontFamily: 'Alexandria Script',
-                    color: FlutterFlowTheme.of(context).primaryBtnText,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 30,
-                  ),
-                ).animated([animationsMap['textOnPageLoadAnimation4']]),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional(-0.5, 0.61),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Color(0xFF48C612),
-                            width: 5,
-                          ),
-                        ),
-                      ).animated(
-                          [animationsMap['containerOnPageLoadAnimation4']]),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(0, 0.62),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFDADADA),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Color(0xFFF6FF00),
-                            width: 5,
-                          ),
-                        ),
-                      ).animated(
-                          [animationsMap['containerOnPageLoadAnimation5']]),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(0.5, 0.61),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).lineColor,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Color(0xFFFF0004),
-                            width: 5,
-                          ),
-                        ),
-                      ).animated(
-                          [animationsMap['containerOnPageLoadAnimation6']]),
-                    ),
-                  ],
                 ),
               ),
               Align(
@@ -568,7 +462,8 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
                     final tasksCreateData = createTasksRecordData(
                       title: taskNameController.text,
                       description: taskDescriptionController.text,
-                      deadline: datePicked,
+                      date: datePicked,
+                      validity: choiceChipsValue,
                     );
                     await TasksRecord.createDoc(currentUserReference)
                         .set(tasksCreateData);

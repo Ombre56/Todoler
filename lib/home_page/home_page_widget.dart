@@ -31,8 +31,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 100),
-                  reverseDuration: Duration(milliseconds: 100),
+                  duration: Duration(milliseconds: 600),
+                  reverseDuration: Duration(milliseconds: 600),
                   child: LoginRegisterWidget(),
                 ),
               );

@@ -6,7 +6,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 
 import 'schema/users_record.dart';
 import 'schema/tasks_record.dart';
-import 'schema/task_category_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -16,7 +15,6 @@ export 'schema/serializers.dart';
 
 export 'schema/users_record.dart';
 export 'schema/tasks_record.dart';
-export 'schema/task_category_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Stream<List<UsersRecord>> queryUsersRecord({
@@ -99,48 +97,6 @@ Future<FFFirestorePage<TasksRecord>> queryTasksRecordPage({
     queryCollectionPage(
       TasksRecord.collection(parent),
       TasksRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
-/// Functions to query TaskCategoryRecords (as a Stream and as a Future).
-Stream<List<TaskCategoryRecord>> queryTaskCategoryRecord({
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      TaskCategoryRecord.collection,
-      TaskCategoryRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<TaskCategoryRecord>> queryTaskCategoryRecordOnce({
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      TaskCategoryRecord.collection,
-      TaskCategoryRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<TaskCategoryRecord>> queryTaskCategoryRecordPage({
-  Query Function(Query) queryBuilder,
-  DocumentSnapshot nextPageMarker,
-  int pageSize,
-  bool isStream,
-}) =>
-    queryCollectionPage(
-      TaskCategoryRecord.collection,
-      TaskCategoryRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../home_page/home_page_widget.dart';
@@ -7,6 +6,7 @@ import '../new_task/new_task_widget.dart';
 import '../tasks_important/tasks_important_widget.dart';
 import '../tasks_not_so_important/tasks_not_so_important_widget.dart';
 import '../tasks_very_important/tasks_very_important_widget.dart';
+import '../welcome/welcome_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,24 +44,20 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
                 alignment: AlignmentDirectional(-0.99, -0.98),
                 child: InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
+                    await Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 600),
+                        reverseDuration: Duration(milliseconds: 600),
+                        child: WelcomeWidget(),
+                      ),
+                    );
                   },
                   child: Icon(
                     Icons.chevron_left,
                     color: Color(0x80000000),
                     size: 44,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.75, -0.96),
-                child: Text(
-                  'Back',
-                  style: TextStyle(
-                    fontFamily: 'Alexandria Script',
-                    color: Color(0x80000000),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
                   ),
                 ),
               ),
@@ -179,18 +175,6 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.05, 0.92),
-                child: Text(
-                  'Add new tasks',
-                  style: FlutterFlowTheme.of(context).title2.override(
-                        fontFamily: 'Alexandria Script',
-                        color: Color(0x80FFFFFF),
-                        fontSize: 33,
-                        useGoogleFonts: false,
-                      ),
-                ),
-              ),
-              Align(
                 alignment: AlignmentDirectional(0.6, 0.1),
                 child: InkWell(
                   onTap: () async {
@@ -277,28 +261,78 @@ class _TaskCategoryWidgetState extends State<TaskCategoryWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.91, 0.97),
-                child: FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 60,
-                  borderWidth: 1,
-                  buttonSize: 90,
-                  icon: Icon(
-                    Icons.add_box_outlined,
-                    color: Color(0x7EFFFFFF),
-                    size: 60,
-                  ),
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 100),
-                        reverseDuration: Duration(milliseconds: 100),
-                        child: NewTaskWidget(),
+                alignment: AlignmentDirectional(0, 1),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 25),
+                      child: Text(
+                        'Add new task',
+                        style: FlutterFlowTheme.of(context).title2.override(
+                              fontFamily: 'Alexandria Script',
+                              color: Color(0x80FFFFFF),
+                              fontSize: 33,
+                              useGoogleFonts: false,
+                            ),
                       ),
-                    );
-                  },
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 20),
+                      child: InkWell(
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 600),
+                              reverseDuration: Duration(milliseconds: 600),
+                              child: NewTaskWidget(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Color(0x48FAF6F6),
+                            borderRadius: BorderRadius.circular(5),
+                            shape: BoxShape.rectangle,
+                          ),
+                          child: Align(
+                            alignment: AlignmentDirectional(0, 0),
+                            child: InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 600),
+                                    reverseDuration:
+                                        Duration(milliseconds: 600),
+                                    child: NewTaskWidget(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                '+',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Alexandria Script',
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 30,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
