@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -13,7 +12,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class TasksNotSoImportantWidget extends StatefulWidget {
   const TasksNotSoImportantWidget({Key key}) : super(key: key);
@@ -23,46 +21,8 @@ class TasksNotSoImportantWidget extends StatefulWidget {
       _TasksNotSoImportantWidgetState();
 }
 
-class _TasksNotSoImportantWidgetState extends State<TasksNotSoImportantWidget>
-    with TickerProviderStateMixin {
-  PagingController<DocumentSnapshot, TasksRecord> _pagingController;
-  Query _pagingQuery;
-  List<StreamSubscription> _streamSubscriptions = [];
-
+class _TasksNotSoImportantWidgetState extends State<TasksNotSoImportantWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final animationsMap = {
-    'listViewOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 1000,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(20, 0),
-        scale: 0,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-  };
-
-  @override
-  void initState() {
-    super.initState();
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
-      this,
-    );
-  }
-
-  @override
-  void dispose() {
-    _streamSubscriptions.forEach((s) => s?.cancel());
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,229 +93,6 @@ class _TasksNotSoImportantWidgetState extends State<TasksNotSoImportantWidget>
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 250, 0, 0),
-                child: PagedListView<DocumentSnapshot<Object>, TasksRecord>(
-                  pagingController: () {
-                    final Query<Object> Function(Query<Object>) queryBuilder =
-                        (tasksRecord) =>
-                            tasksRecord.orderBy('date', descending: true);
-                    if (_pagingController != null) {
-                      final query = queryBuilder(TasksRecord.collection());
-                      if (query != _pagingQuery) {
-                        // The query has changed
-                        _pagingQuery = query;
-                        _streamSubscriptions.forEach((s) => s?.cancel());
-                        _streamSubscriptions.clear();
-                        _pagingController.refresh();
-                      }
-                      return _pagingController;
-                    }
-
-                    _pagingController = PagingController(firstPageKey: null);
-                    _pagingQuery = queryBuilder(TasksRecord.collection());
-                    _pagingController.addPageRequestListener((nextPageMarker) {
-                      queryTasksRecordPage(
-                        parent: currentUserReference,
-                        queryBuilder: (tasksRecord) =>
-                            tasksRecord.orderBy('date', descending: true),
-                        nextPageMarker: nextPageMarker,
-                        pageSize: 25,
-                        isStream: true,
-                      ).then((page) {
-                        _pagingController.appendPage(
-                          page.data,
-                          page.nextPageMarker,
-                        );
-                        final streamSubscription =
-                            page.dataStream?.listen((data) {
-                          final itemIndexes = _pagingController.itemList
-                              .asMap()
-                              .map((k, v) => MapEntry(v.reference.id, k));
-                          data.forEach((item) {
-                            final index = itemIndexes[item.reference.id];
-                            if (index != null) {
-                              _pagingController.itemList
-                                  .replaceRange(index, index + 1, [item]);
-                            }
-                          });
-                          setState(() {});
-                        });
-                        _streamSubscriptions.add(streamSubscription);
-                      });
-                    });
-                    return _pagingController;
-                  }(),
-                  padding: EdgeInsets.zero,
-                  primary: false,
-                  scrollDirection: Axis.vertical,
-                  builderDelegate: PagedChildBuilderDelegate<TasksRecord>(
-                    // Customize what your widget looks like when it's loading the first page.
-                    firstPageProgressIndicatorBuilder: (_) => Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: SpinKitFoldingCube(
-                          color: Color(0xFF1800FF),
-                          size: 50,
-                        ),
-                      ),
-                    ),
-
-                    itemBuilder: (context, _, listViewIndex) {
-                      final listViewTasksRecord =
-                          _pagingController.itemList[listViewIndex];
-                      return Visibility(
-                        visible: (listViewTasksRecord.validity) ==
-                            'not So Important',
-                        child: Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                            child: Container(
-                              width: 300,
-                              height: 150,
-                              decoration: BoxDecoration(
-                                color: Color(0x48EEEEEE),
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(
-                                  color: Color(0xFF00FF3A),
-                                  width: 3,
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 10, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 0),
-                                          child: AutoSizeText(
-                                            listViewTasksRecord.title
-                                                .maybeHandleOverflow(
-                                              maxChars: 10,
-                                              replacement: '…',
-                                            ),
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontFamily: 'Alexandria Script',
-                                              color: Color(0x7E353535),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 25,
-                                              fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          buttonSize: 40,
-                                          icon: Icon(
-                                            Icons.delete_forever,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBtnText,
-                                            size: 30,
-                                          ),
-                                          onPressed: () async {
-                                            await listViewTasksRecord.reference
-                                                .delete();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        15, 0, 0, 0),
-                                    child: AutoSizeText(
-                                      listViewTasksRecord.description
-                                          .maybeHandleOverflow(
-                                        maxChars: 40,
-                                        replacement: '…',
-                                      ),
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                        fontFamily: 'Alexandria Script',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBtnText,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        110, 0, 0, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 13, 0),
-                                            child: Text(
-                                              'Deadline:',
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                fontFamily: 'Alexandria Script',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBtnText,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 10, 0),
-                                            child: Text(
-                                              valueOrDefault<String>(
-                                                dateTimeFormat('d/M/y',
-                                                    listViewTasksRecord.date),
-                                                'date',
-                                              ),
-                                              textAlign: TextAlign.end,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color:
-                                                            Color(0xFFFF0000),
-                                                      ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ).animated([animationsMap['listViewOnPageLoadAnimation']]),
-              ),
               Align(
                 alignment: AlignmentDirectional(0, -0.62),
                 child: Row(
@@ -408,6 +145,192 @@ class _TasksNotSoImportantWidgetState extends State<TasksNotSoImportantWidget>
                       ),
                     ),
                   ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 240, 0, 220),
+                child: StreamBuilder<List<TasksRecord>>(
+                  stream: queryTasksRecord(
+                    parent: currentUserReference,
+                    queryBuilder: (tasksRecord) => tasksRecord
+                        .where('validity', isEqualTo: 'not So Important')
+                        .orderBy('date', descending: true),
+                    limit: 2,
+                  ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: SpinKitFoldingCube(
+                            color: Color(0xFF1800FF),
+                            size: 50,
+                          ),
+                        ),
+                      );
+                    }
+                    List<TasksRecord> columnTasksRecordList = snapshot.data;
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: List.generate(columnTasksRecordList.length,
+                          (columnIndex) {
+                        final columnTasksRecord =
+                            columnTasksRecordList[columnIndex];
+                        return Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            child: Container(
+                              width: 300,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                color: Color(0x48EEEEEE),
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                  color: Color(0xFF00FF3A),
+                                  width: 3,
+                                ),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(0, -0.85),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 0, 10, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10, 0, 0, 0),
+                                            child: AutoSizeText(
+                                              columnTasksRecord.title
+                                                  .maybeHandleOverflow(
+                                                maxChars: 10,
+                                                replacement: '…',
+                                              ),
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                fontFamily: 'Alexandria Script',
+                                                color: Color(0x7E353535),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 25,
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                            ),
+                                          ),
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            buttonSize: 40,
+                                            icon: Icon(
+                                              Icons.delete_forever,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBtnText,
+                                              size: 30,
+                                            ),
+                                            onPressed: () async {
+                                              await columnTasksRecord.reference
+                                                  .delete();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, -0.05),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          15, 0, 0, 0),
+                                      child: AutoSizeText(
+                                        columnTasksRecord.description
+                                            .maybeHandleOverflow(
+                                          maxChars: 20,
+                                          replacement: '…',
+                                        ),
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          fontFamily: 'Alexandria Script',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBtnText,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional(0, 0.65),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          110, 0, 0, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 13, 0),
+                                              child: Text(
+                                                'Deadline:',
+                                                textAlign: TextAlign.end,
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                      'Alexandria Script',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryBtnText,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 10, 0),
+                                              child: Text(
+                                                valueOrDefault<String>(
+                                                  dateTimeFormat('yMMMd',
+                                                      columnTasksRecord.date),
+                                                  'date',
+                                                ),
+                                                textAlign: TextAlign.end,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color:
+                                                              Color(0xFFFF0000),
+                                                        ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    );
+                  },
                 ),
               ),
               Align(

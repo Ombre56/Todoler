@@ -279,11 +279,10 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0, 0.9),
+                    alignment: AlignmentDirectional(0.8, 0.9),
                     child: FFButtonWidget(
                       onPressed: () async {
                         await deleteUser(context);
-                        await currentUserReference.delete();
                         await Navigator.push(
                           context,
                           PageTransition(
@@ -293,17 +292,18 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             child: LoginRegisterWidget(),
                           ),
                         );
+                        await editProfileUsersRecord.reference.delete();
                       },
                       text: 'Delete',
                       options: FFButtonOptions(
-                        width: 280,
+                        width: 80,
                         height: 60,
                         color: Color(0xFFB71C1C),
                         textStyle: FlutterFlowTheme.of(context).title2.override(
                               fontFamily: 'Alexandria Script',
                               color:
                                   FlutterFlowTheme.of(context).primaryBtnText,
-                              fontSize: 32,
+                              fontSize: 22,
                               useGoogleFonts: false,
                             ),
                         borderSide: BorderSide(

@@ -345,13 +345,6 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                                             Duration(milliseconds: 2000),
                                             () => setState(() {}),
                                           ),
-                                          onFieldSubmitted: (_) async {
-                                            if (formKey2.currentState == null ||
-                                                !formKey2.currentState
-                                                    .validate()) {
-                                              return;
-                                            }
-                                          },
                                           autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -387,8 +380,8 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                                             if (val == null || val.isEmpty) {
                                               return 'Field is required';
                                             }
-                                            if (val.length < 1) {
-                                              return 'The minimum number of characters is : 1';
+                                            if (val.length < 3) {
+                                              return 'The minimum number of characters is : 3';
                                             }
                                             if (val.length > 10) {
                                               return 'The maximum number of characters is : 10';
@@ -446,14 +439,6 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                                               Duration(milliseconds: 2000),
                                               () => setState(() {}),
                                             ),
-                                            onFieldSubmitted: (_) async {
-                                              if (formKey1.currentState ==
-                                                      null ||
-                                                  !formKey1.currentState
-                                                      .validate()) {
-                                                return;
-                                              }
-                                            },
                                             autofocus: true,
                                             obscureText: false,
                                             decoration: InputDecoration(
@@ -554,14 +539,6 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                                               Duration(milliseconds: 2000),
                                               () => setState(() {}),
                                             ),
-                                            onFieldSubmitted: (_) async {
-                                              if (formKey4.currentState ==
-                                                      null ||
-                                                  !formKey4.currentState
-                                                      .validate()) {
-                                                return;
-                                              }
-                                            },
                                             autofocus: true,
                                             obscureText: !passwordVisibility2,
                                             decoration: InputDecoration(
@@ -674,14 +651,6 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                                               Duration(milliseconds: 2000),
                                               () => setState(() {}),
                                             ),
-                                            onFieldSubmitted: (_) async {
-                                              if (formKey3.currentState ==
-                                                      null ||
-                                                  !formKey3.currentState
-                                                      .validate()) {
-                                                return;
-                                              }
-                                            },
                                             autofocus: true,
                                             obscureText: !passwordVisibility3,
                                             decoration: InputDecoration(
@@ -757,6 +726,26 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                                       40, 80, 0, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
+                                      if (formKey2.currentState == null ||
+                                          !formKey2.currentState.validate()) {
+                                        return;
+                                      }
+
+                                      if (formKey1.currentState == null ||
+                                          !formKey1.currentState.validate()) {
+                                        return;
+                                      }
+
+                                      if (formKey4.currentState == null ||
+                                          !formKey4.currentState.validate()) {
+                                        return;
+                                      }
+
+                                      if (formKey3.currentState == null ||
+                                          !formKey3.currentState.validate()) {
+                                        return;
+                                      }
+
                                       if (passwordTextController2?.text !=
                                           confirmPasswordTextController0
                                               ?.text) {
@@ -831,17 +820,14 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.03, 0.98),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                  child: Text(
-                    'Kaem copyrights',
-                    style: TextStyle(
-                      fontFamily: 'Alexandria Script',
-                      color: FlutterFlowTheme.of(context).primaryBtnText,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                alignment: AlignmentDirectional(0.03, 0.96),
+                child: Text(
+                  'Kaem copyrights',
+                  style: TextStyle(
+                    fontFamily: 'Alexandria Script',
+                    color: FlutterFlowTheme.of(context).primaryBtnText,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
                   ),
                 ),
               ),
