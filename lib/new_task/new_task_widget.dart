@@ -11,6 +11,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NewTaskWidget extends StatefulWidget {
@@ -417,8 +418,10 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
                               ? [choiceChipsValue]
                               : ['very Important'],
                           options: [
-                            ChipData('very Important', Icons.train_outlined),
-                            ChipData('important', Icons.accessible),
+                            ChipData('very Important',
+                                FontAwesomeIcons.exclamationTriangle),
+                            ChipData(
+                                'important', FontAwesomeIcons.skullCrossbones),
                             ChipData('not So Important', Icons.account_box)
                           ],
                           onChanged: (val) =>
