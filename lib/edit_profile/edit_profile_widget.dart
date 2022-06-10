@@ -282,6 +282,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     alignment: AlignmentDirectional(0.8, 0.9),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        await editProfileUsersRecord.reference.delete();
                         await deleteUser(context);
                         await Navigator.push(
                           context,
@@ -292,7 +293,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             child: LoginRegisterWidget(),
                           ),
                         );
-                        await editProfileUsersRecord.reference.delete();
                       },
                       text: 'Delete',
                       options: FFButtonOptions(
