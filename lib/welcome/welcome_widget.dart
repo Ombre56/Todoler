@@ -230,7 +230,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: Text(
-                        'Kaem copyrights',
+                        '',
                         style: TextStyle(
                           fontFamily: 'Alexandria Script',
                           color: FlutterFlowTheme.of(context).primaryBtnText,

@@ -35,9 +35,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   String get email;
 
   @nullable
-  DocumentReference get tasks;
-
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -78,7 +75,6 @@ Map<String, dynamic> createUsersRecordData({
   String uid,
   String password,
   String email,
-  DocumentReference tasks,
 }) =>
     serializers.toFirestore(
         UsersRecord.serializer,
@@ -89,5 +85,4 @@ Map<String, dynamic> createUsersRecordData({
           ..phoneNumber = phoneNumber
           ..uid = uid
           ..password = password
-          ..email = email
-          ..tasks = tasks));
+          ..email = email));

@@ -26,10 +26,6 @@ abstract class TasksRecord implements Built<TasksRecord, TasksRecordBuilder> {
   String get validity;
 
   @nullable
-  @BuiltValueField(wireName: 'created_by')
-  DocumentReference get createdBy;
-
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -73,7 +69,6 @@ Map<String, dynamic> createTasksRecordData({
   DateTime date,
   String photoUrl,
   String validity,
-  DocumentReference createdBy,
 }) =>
     serializers.toFirestore(
         TasksRecord.serializer,
@@ -82,5 +77,4 @@ Map<String, dynamic> createTasksRecordData({
           ..description = description
           ..date = date
           ..photoUrl = photoUrl
-          ..validity = validity
-          ..createdBy = createdBy));
+          ..validity = validity));

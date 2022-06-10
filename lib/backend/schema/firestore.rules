@@ -11,7 +11,7 @@ service cloud.firestore {
     match /users/{parent}/tasks/{document} {
       allow create: if true;
       allow read: if true;
-      allow write: if resource.data.created_by == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow write: if false;
       allow delete: if false;
     }
 

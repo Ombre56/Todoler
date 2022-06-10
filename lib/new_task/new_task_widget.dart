@@ -27,7 +27,9 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
   TextEditingController taskDescriptionController;
   TextEditingController taskNameController;
   String choiceChipsValue;
+  final formKey1 = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final formKey2 = GlobalKey<FormState>();
   final animationsMap = {
     'textOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -218,27 +220,42 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
                             color: Color(0x48FAF6F6),
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: TextFormField(
-                            controller: taskNameController,
-                            onChanged: (_) => EasyDebounce.debounce(
-                              'taskNameController',
-                              Duration(milliseconds: 2000),
-                              () => setState(() {}),
-                            ),
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText: 'Enter text',
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              filled: true,
-                              fillColor: Colors.transparent,
-                            ),
-                            style: TextStyle(
-                              fontFamily: 'Alexandria Script',
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20,
+                          child: Form(
+                            key: formKey1,
+                            autovalidateMode: AutovalidateMode.disabled,
+                            child: TextFormField(
+                              controller: taskNameController,
+                              autofocus: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Enter text',
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                prefixIcon: Icon(
+                                  Icons.trending_neutral_sharp,
+                                ),
+                              ),
+                              style: TextStyle(
+                                fontFamily: 'Alexandria Script',
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                              ),
+                              validator: (val) {
+                                if (val == null || val.isEmpty) {
+                                  return 'Field is required';
+                                }
+                                if (val.length < 3) {
+                                  return 'The minimum number of characters is : 3';
+                                }
+                                if (val.length > 10) {
+                                  return 'The minimum number of characters is : 10';
+                                }
+
+                                return null;
+                              },
                             ),
                           ),
                         ).animated(
@@ -323,72 +340,83 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
                         ),
                       ).animated([animationsMap['textOnPageLoadAnimation3']]),
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(-0.82, 0.33),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Color(0x48FAF6F6),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  dateTimeFormat('d/M/y', datePicked),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                    Form(
+                      key: formKey2,
+                      autovalidateMode: AutovalidateMode.disabled,
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-0.82, 0.33),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.35,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Color(0x48FAF6F6),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Text(
+                                    dateTimeFormat('d/M/y', datePicked),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Alexandria Script',
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ).animated([
+                                animationsMap['containerOnPageLoadAnimation3']
+                              ]),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  await DatePicker.showDatePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    onConfirm: (date) {
+                                      setState(() => datePicked = date);
+                                    },
+                                    currentTime: getCurrentTimestamp,
+                                    minTime: getCurrentTimestamp,
+                                    locale: LocaleType.values.firstWhere(
+                                      (l) =>
+                                          l.name ==
+                                          FFLocalizations.of(context)
+                                              .languageCode,
+                                      orElse: null,
+                                    ),
+                                  );
+                                },
+                                text: 'Click',
+                                options: FFButtonOptions(
+                                  width: 70,
+                                  height: 40,
+                                  color: Color(0xFFEF7547),
+                                  textStyle: TextStyle(
                                     fontFamily: 'Alexandria Script',
-                                    color: Colors.black,
+                                    color: Color(0x80000000),
                                     fontWeight: FontWeight.w500,
                                     fontSize: 20,
                                   ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: 12,
                                 ),
-                              ),
-                            ).animated([
-                              animationsMap['containerOnPageLoadAnimation3']
-                            ]),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                await DatePicker.showDatePicker(
-                                  context,
-                                  showTitleActions: true,
-                                  onConfirm: (date) {
-                                    setState(() => datePicked = date);
-                                  },
-                                  currentTime: getCurrentTimestamp,
-                                  minTime: getCurrentTimestamp,
-                                );
-                              },
-                              text: 'Click',
-                              options: FFButtonOptions(
-                                width: 70,
-                                height: 40,
-                                color: Color(0xFFEF7547),
-                                textStyle: TextStyle(
-                                  fontFamily: 'Alexandria Script',
-                                  color: Color(0x80000000),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20,
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: 12,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -420,9 +448,9 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
                           options: [
                             ChipData('very Important',
                                 FontAwesomeIcons.exclamationTriangle),
-                            ChipData(
-                                'important', FontAwesomeIcons.skullCrossbones),
-                            ChipData('not So Important', Icons.account_box)
+                            ChipData('important',
+                                FontAwesomeIcons.exclamationCircle),
+                            ChipData('not So Important', Icons.emoji_emotions)
                           ],
                           onChanged: (val) =>
                               setState(() => choiceChipsValue = val.first),
@@ -462,6 +490,36 @@ class _NewTaskWidgetState extends State<NewTaskWidget>
                 alignment: AlignmentDirectional(0, 0.9),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    if (formKey1.currentState == null ||
+                        !formKey1.currentState.validate()) {
+                      return;
+                    }
+
+                    if (formKey2.currentState == null ||
+                        !formKey2.currentState.validate()) {
+                      return;
+                    }
+
+                    if (datePicked == null) {
+                      await DatePicker.showDatePicker(
+                        context,
+                        showTitleActions: true,
+                        onConfirm: (date) {
+                          setState(() => datePicked = date);
+                        },
+                        currentTime: getCurrentTimestamp,
+                        minTime: getCurrentTimestamp,
+                        locale: LocaleType.values.firstWhere(
+                          (l) =>
+                              l.name ==
+                              FFLocalizations.of(context).languageCode,
+                          orElse: null,
+                        ),
+                      );
+
+                      return;
+                    }
+
                     final tasksCreateData = createTasksRecordData(
                       title: taskNameController.text,
                       description: taskDescriptionController.text,
